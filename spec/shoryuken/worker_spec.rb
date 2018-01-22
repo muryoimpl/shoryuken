@@ -189,4 +189,18 @@ RSpec.describe Shoryuken::Worker do
       end
     end
   end
+
+  describe '#perform' do
+    let(:sqs_msg) { double(Shoryuken::Message, body: 'hi') }
+
+    before do
+      class NotOverridenWorker
+        include Shoryuken::Worker
+      end
+    end
+
+    it 'should override #perform method' do
+      expect { NotOverridenWorker.new.perform(sqs_msg, sqs_msg.body) }.to raise_error(NotImplementedError)
+    end
+  end
 end

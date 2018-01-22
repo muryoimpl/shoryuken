@@ -5,6 +5,10 @@ module Shoryuken
       base.shoryuken_class_attribute :shoryuken_options_hash
     end
 
+    def perform(sqs_msg, name)
+      fail NotImplementedError
+    end
+
     module ClassMethods
       def perform_async(body, options = {})
         Shoryuken.worker_executor.perform_async(self, body, options)
